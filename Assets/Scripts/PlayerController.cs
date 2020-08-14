@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class PlayerController : MonoBehaviour
     public int health = 5;
 
     private Rigidbody rb3d;
-    private int score;
+    private int score = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +22,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Move();
+        CheckHealth();
     }
 
     private void Move()
@@ -33,18 +35,33 @@ public class PlayerController : MonoBehaviour
         rb3d.AddForce(movement);
     }
 
+    private void CheckHealth()
+    {
+        if (health == 0)
+        {
+            Debug.Log("Game Over!");
+            health = 5;
+            score = 0;
+            SceneManager.LoadScene("maze");
+        }
+    }
+
     void OnTriggerEnter(Collider col)
     {
-        if (col.tag == "Pickup")
+        switch (col.tag)
         {
-            score++;
-            Debug.Log($"Score: {score}");
-            Destroy(col.gameObject);
-        }
-        else if (col.tag == "Trap")
-        {
-            health--;
-            Debug.Log($"Health: {health}");
+            case "Pickup":
+                score++;
+                Debug.Log($"Score: {score}");
+                Destroy(col.gameObject);
+                break;
+            case "Trap":
+                health--;
+                Debug.Log($"Health: {health}");
+                break;
+            case "Goal":
+                Debug.Log("You win!");
+                break;
         }
     }
 }
