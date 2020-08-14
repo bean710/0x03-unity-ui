@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float speed = 200;
+    public int health = 5;
 
     private Rigidbody rb3d;
     private int score;
@@ -32,10 +33,18 @@ public class PlayerController : MonoBehaviour
         rb3d.AddForce(movement);
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider col)
     {
-        score++;
-        Debug.Log($"Score: {score}");
-        Destroy(other.gameObject);
+        if (col.tag == "Pickup")
+        {
+            score++;
+            Debug.Log($"Score: {score}");
+            Destroy(col.gameObject);
+        }
+        else if (col.tag == "Trap")
+        {
+            health--;
+            Debug.Log($"Health: {health}");
+        }
     }
 }
