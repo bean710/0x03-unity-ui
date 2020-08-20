@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     public float speed = 200;
     public int health = 5;
+
+    public Text scoreText;
 
     private Rigidbody rb3d;
     private int score = 0;
@@ -52,7 +55,7 @@ public class PlayerController : MonoBehaviour
         {
             case "Pickup":
                 score++;
-                Debug.Log($"Score: {score}");
+                SetScoreText();
                 Destroy(col.gameObject);
                 break;
             case "Trap":
@@ -63,5 +66,10 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("You win!");
                 break;
         }
+    }
+
+    void SetScoreText()
+    {
+        scoreText.text = $"Score: {score}";
     }
 }
