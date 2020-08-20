@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
     {
         if (health == 0)
         {
-            Debug.Log("Game Over!");
+            AnnounceLoss();
             health = 5;
             score = 0;
             SceneManager.LoadScene("maze");
@@ -88,6 +88,17 @@ public class PlayerController : MonoBehaviour
         winLoseText.text = "You Win!";
         winLoseText.color = Color.black;
         pImg.color = Color.green;
+        parent.SetActive(true);
+    }
+
+    void AnnounceLoss()
+    {
+        GameObject parent = winLoseText.transform.parent.gameObject;
+        Image pImg = parent.GetComponent<Image>();
+
+        winLoseText.text = "Game Over!";
+        winLoseText.color = Color.white;
+        pImg.color = Color.red;
         parent.SetActive(true);
     }
 }
