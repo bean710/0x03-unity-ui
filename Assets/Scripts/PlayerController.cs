@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
 
     public Text scoreText;
     public Text healthText;
+    public Text winLoseText;
 
     private Rigidbody rb3d;
     private int score = 0;
@@ -64,7 +65,7 @@ public class PlayerController : MonoBehaviour
                 SetHealthText();
                 break;
             case "Goal":
-                Debug.Log("You win!");
+                AnnounceWin();
                 break;
         }
     }
@@ -77,5 +78,16 @@ public class PlayerController : MonoBehaviour
     void SetHealthText()
     {
         healthText.text = $"Health: {health}";
+    }
+
+    void AnnounceWin()
+    {
+        GameObject parent = winLoseText.transform.parent.gameObject;
+        Image pImg = parent.GetComponent<Image>();
+
+        winLoseText.text = "You Win!";
+        winLoseText.color = Color.black;
+        pImg.color = Color.green;
+        parent.SetActive(true);
     }
 }
